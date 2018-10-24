@@ -3,6 +3,33 @@ import './Map.css'
 
 class Map extends Component {
 
+  state = {
+    locations: [
+      {
+      title: 'Manufaktura',
+      location: {lat: 51.779444, lng: 19.4475}
+    },
+    {
+      title: 'Piotrkowska',
+      location: {lat: 51.776111, lng: 19.454722}
+    },
+    {
+      title: 'ZOO',
+      location: {lat: 51.761094, lng: 19.412197}
+    },
+    {
+      title: 'Palm House',
+      location: {lat: 51.760348, lng: 19.480125}
+    },
+    {
+      title: 'Ksiezy Mlyn',
+      location: {lat: 51.755833 , lng: 19.481944}
+    },
+    ],
+    markers: []
+
+  }
+
   // Render map after the page is loaded
   componentDidMount() {
     this.renderMap()
@@ -17,9 +44,28 @@ class Map extends Component {
   initMap = () => {
     var map
     map = new window.google.maps.Map(document.getElementById('map'), {
-      center: {lat: 51.110453, lng: 17.032753},
+      center: {lat: 51.759445, lng: 19.457216},
       zoom: 13
     })
+
+    // Looping through all of the locations
+    for (var i = 0; i < this.state.locations.length; i++) {
+      // Gathering position and title from the array
+      var position = this.state.locations[i].location
+      var title = this.state.locations[i].title
+
+      // Creating a marker per location
+      var marker = new window.google.maps.Marker({
+        map: map,
+        position: position,
+        title: title,
+        animation: window.google.maps.Animation.DROP,
+        id: i
+      })
+      // Pushing the marker array to the array of markers
+      this.state.markers.push(marker)
+    }
+
   }
 
   render() {
