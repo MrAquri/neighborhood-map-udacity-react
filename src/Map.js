@@ -25,7 +25,7 @@ class Map extends Component {
       title: 'Księży Młyn',
       location: {lat: 51.755833 , lng: 19.481944}
     },
-    ]
+  ]
   }
 
   // Render map after the page is loaded
@@ -40,10 +40,10 @@ class Map extends Component {
 
   // Method initializing and rendering the google map
   initMap = () => {
-    var map
+    let map
 
     // Create a new blank array for all the listing markers.
-    var markers = [];
+    let markers = [];
 
     map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.759445, lng: 19.457216},
@@ -68,6 +68,10 @@ class Map extends Component {
 
         markers.push(marker)
 
+        let paragraphs, links
+        paragraphs = []
+        links = []
+
         // Replacing spaces to the '_'
         let search = marker.title.replace(/\s+/g, '_')
         let url = 'https://pl.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
@@ -86,25 +90,25 @@ class Map extends Component {
             // Getting first paragraph of the wikipedia
             let firstParagraph = content.slice(0, content.indexOf('</p>') + '</p>'.length)
             // Create page link to the Wikipedia website
-            let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click link for more informations</a>`
+            let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click here for more informations</a>`
+            paragraphs.push(firstParagraph)
+            links.push(pageLink)
         }).catch(function(error) {
             throw new Error ('Retriving data failed: ' + error.statusText)
         })
 
-
        // Creating an event listener opening infowindow at each marker
        marker.addListener('click', function() {
-         if (infowindow.marker !== marker) {
            infowindow.marker = marker;
-           infowindow.setContent('<div>' + marker.title + '</div>');
+           infowindow.setContent('<div>' + marker.title + paragraphs + links +'</div>');
            infowindow.open(map, marker);
            // Make sure the marker property is cleared if the infowindow is closed.
            infowindow.addListener('closeclick',function(){
              infowindow.setMarker = null;
             });
-          }
         })
         })
+        this.setState({ markerState: markers })
       }
 
   render() {
