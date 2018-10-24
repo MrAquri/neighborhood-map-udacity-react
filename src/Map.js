@@ -25,9 +25,7 @@ class Map extends Component {
       title: 'Ksiezy Mlyn',
       location: {lat: 51.755833 , lng: 19.481944}
     },
-    ],
-    markers: []
-
+    ]
   }
 
   // Render map after the page is loaded
@@ -43,29 +41,46 @@ class Map extends Component {
   // Method initializing and rendering the google map
   initMap = () => {
     var map
+
+    // Create a new blank array for all the listing markers.
+    var markers = [];
+
     map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.759445, lng: 19.457216},
       zoom: 13
     })
 
-    // Looping through all of the locations
-    for (var i = 0; i < this.state.locations.length; i++) {
-      // Gathering position and title from the array
-      var position = this.state.locations[i].location
-      var title = this.state.locations[i].title
+    var infowindow = new window.google.maps.InfoWindow()
 
-      // Creating a marker per location
-      var marker = new window.google.maps.Marker({
-        map: map,
-        position: position,
-        title: title,
-        animation: window.google.maps.Animation.DROP,
-        id: i
+      // Looping through all of the locations
+      this.state.locations.forEach((loc) => {
+        // Gathering position and title from the array
+        var position = loc.location
+        var title = loc.title
+
+        // Creating a marker per location
+        var marker = new window.google.maps.Marker({
+          map: map,
+          position: position,
+          title: title,
+          animation: window.google.maps.Animation.DROP,
+        })
+
+        markers.push(marker)
+
+       // Creating an event listener opening infowindow at each marker
+       marker.addListener('click', function() {
+         if (infowindow.marker !== marker) {
+           infowindow.marker = marker;
+           infowindow.setContent('<div>' + marker.title + '</div>');
+           infowindow.open(map, marker);
+           // Make sure the marker property is cleared if the infowindow is closed.
+           infowindow.addListener('closeclick',function(){
+             infowindow.setMarker = null;
+            });
+          }
+        });
       })
-      // Pushing the marker array to the array of markers
-      this.state.markers.push(marker)
-    }
-
   }
 
   render() {
@@ -87,5 +102,6 @@ class Map extends Component {
     }
     index.parentNode.insertBefore(script, index)
   }
+
 
 export default Map;
