@@ -6,23 +6,23 @@ class Map extends Component {
   state = {
     locations: [
       {
-      title: 'Manufaktura',
+      title: 'Manufaktura (Łódź)',
       location: {lat: 51.779444, lng: 19.4475}
     },
     {
-      title: 'Piotrkowska',
+      title: 'Ulica Piotrkowska w Łodzi',
       location: {lat: 51.776111, lng: 19.454722}
     },
     {
-      title: 'ZOO',
-      location: {lat: 51.761094, lng: 19.412197}
+      title: 'Łódzki Ogród Botaniczny',
+      location: {lat: 51.756389, lng: 19.406667}
     },
     {
-      title: 'Palm House',
+      title: 'Palmiarnia Łódzka',
       location: {lat: 51.760348, lng: 19.480125}
     },
     {
-      title: 'Ksiezy Mlyn',
+      title: 'Księży Młyn',
       location: {lat: 51.755833 , lng: 19.481944}
     },
     ]
@@ -67,6 +67,27 @@ class Map extends Component {
         })
 
         markers.push(marker)
+        // Replacing spaces to the '_'
+        let search = marker.title.replace(/\s+/g, '_')
+        let url = 'https://pl.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
+        fetch(url).then(function(response) {
+          if (response.ok) {
+            return response.json()
+          } else {
+            throw new Error ('Response error: ' + response.statusText)
+          }
+        }).then(function(data) {
+            let page = data.query.pages
+            // Page unique number
+            let pageId = Object.keys(data.query.pages)[0]
+            // Getting the content from the page
+            let content = page[pageId].extract
+            // Getting first paragraph of the wikipedia
+            let firstParagraph = content.slice(0, content.indexOf('</p>') + '</p>'.length)
+            // Create page link to the Wikipedia website
+            let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click link for more informations</a>`
+        })
+
 
        // Creating an event listener opening infowindow at each marker
        marker.addListener('click', function() {
@@ -79,9 +100,9 @@ class Map extends Component {
              infowindow.setMarker = null;
             });
           }
-        });
-      })
-  }
+        })
+        })
+      }
 
   render() {
     return (
