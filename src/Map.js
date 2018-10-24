@@ -67,6 +67,7 @@ class Map extends Component {
         })
 
         markers.push(marker)
+
         // Replacing spaces to the '_'
         let search = marker.title.replace(/\s+/g, '_')
         let url = 'https://pl.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
@@ -74,7 +75,7 @@ class Map extends Component {
           if (response.ok) {
             return response.json()
           } else {
-            throw new Error ('Response error: ' + response.statusText)
+              throw new Error ('Response error: ' + response.statusText)
           }
         }).then(function(data) {
             let page = data.query.pages
@@ -86,6 +87,8 @@ class Map extends Component {
             let firstParagraph = content.slice(0, content.indexOf('</p>') + '</p>'.length)
             // Create page link to the Wikipedia website
             let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click link for more informations</a>`
+        }).catch(function(error) {
+            throw new Error ('Retriving data failed: ' + error.statusText)
         })
 
 
