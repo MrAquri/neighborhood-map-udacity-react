@@ -1,9 +1,56 @@
 html, body {
   height: 100%;
+  width: 100%;
 }
 body {
   line-height: 1.5;
+  max-width: 1150px;
+margin-left: auto;
+margin-right: auto;
 }
-body, .app {
-  background: white;
+body {
+  background: #000000
+}
+/* Header Style */
+.header {
+  color: #ffffff;
+  height: 30px;
+  font-size: 14pt;
+  font-weight: 200;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  margin: auto;
+  padding: 10px 10px;
+  width: 100%;
+}
+
+
+/* Wrapper styles */
+
+.container {
+  height: 700px;
+  position: relative;
+}
+
+/* Map Styles */
+#map {
+  bottom:0px;
+  height: 100%;
+  left: 300px;
+  position: absolute;
+  right: 0px;
+  width: 75%;
+}
+
+
+/* List Styles */
+#list {
+  color: #fff;
+  border: 1px solid #999;
+  border-radius: 3px;
+  height: 650px;
+  line-height: 35px;
+  text-align: left;
+  padding: 10px 10px;
+  width: 18%;
 }
