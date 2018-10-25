@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Map from './Map.js'
 
 class List extends Component {
 
@@ -12,13 +11,22 @@ class List extends Component {
   }
 
   render() {
+    console.log(this.props.markers)
     return (
       <div id='list'>My Favourite Places
         <form className='search-form'>
           <input className='search-location' placeholder='Find location' onChange={this.updateQuery }/>
         </form>
+
         <ul className='search-list'>
-        
+{/*
+          {this.props.markers.filter(marker => (
+            <li key={marker.title}>
+              {marker.title}
+            </li>
+          ))
+          }
+          */}
         </ul>
       </div>
     )

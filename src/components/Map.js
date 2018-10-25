@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import List from './List.js';
 
 class Map extends Component {
 
   state = {
     locations: [
-      {
+    {
       title: 'Manufaktura (Łódź)',
       location: {lat: 51.779444, lng: 19.4475}
     },
@@ -24,7 +25,8 @@ class Map extends Component {
       title: 'Księży Młyn',
       location: {lat: 51.755833 , lng: 19.481944}
     },
-  ]
+  ],
+    markers: []
   }
 
   // Render map after the page is loaded
@@ -42,7 +44,7 @@ class Map extends Component {
     let map
 
     // Create a new blank array for all the listing markers.
-    let markers = [];
+    let markers = []
 
     map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.759445, lng: 19.457216},
@@ -106,13 +108,20 @@ class Map extends Component {
              infowindow.setMarker = null;
             });
         })
+
         })
-        this.setState({ markerState: markers })
+                this.setState({markers:markers})
       }
 
   render() {
     return (
+      <div>
+        <List
+          markers={this.state.markers}
+        />
+
       <div id='map'> </div>
+      </div>
     )
   }
 }
