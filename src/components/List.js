@@ -19,14 +19,12 @@ class List extends Component {
         </form>
 
         <ul className='search-list'>
-{/*
-          {this.props.markers.filter(marker => (
-            <li key={marker.title}>
-              {marker.title}
-            </li>
-          ))
-          }
-          */}
+        {this.props.markers.map(marker => (
+          <li key={marker.title}>
+            {marker.title}
+          </li>
+        ))
+        }
         </ul>
       </div>
     )
