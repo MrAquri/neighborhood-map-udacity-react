@@ -26,6 +26,7 @@ class Map extends Component {
       location: {lat: 51.755833 , lng: 19.481944}
     },
   ],
+    map: {},
     markers: []
   }
 
@@ -39,17 +40,17 @@ class Map extends Component {
     window.initMap = this.initMap
   }
 
+
   // Method initializing and rendering the google map
   initMap = () => {
-    let map
-
     // Create a new blank array for all the listing markers.
     let markers = []
 
-    map = new window.google.maps.Map(document.getElementById('map'), {
+    let map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.759445, lng: 19.457216},
       zoom: 13
     })
+    this.setState({map:map})
 
     var infowindow = new window.google.maps.InfoWindow()
 
@@ -116,11 +117,11 @@ class Map extends Component {
   render() {
     return (
       <div>
+        <div id='map'> </div>
         <List
           markers={this.state.markers}
+          map={this.state.map}
         />
-
-      <div id='map'> </div>
       </div>
     )
   }

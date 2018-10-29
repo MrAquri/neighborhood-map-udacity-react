@@ -11,11 +11,11 @@ class List extends Component {
   }
 
   render() {
-    console.log(this.props.markers)
     return (
       <div id='list'>My Favourite Places
         <form className='search-form'>
           <input className='search-location' placeholder='Find location' onChange={this.updateQuery }/>
+          <button className='filter-button'>Filter</button>
         </form>
 
         <ul className='search-list'>
