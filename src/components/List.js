@@ -33,7 +33,8 @@ class List extends Component {
     }
 
     return (
-      <div id='list'>My Favourite Places
+      <div id='list'>
+      <h3 className='fav-places'> My Favourite Places</h3>
         <form className='search-form'>
           <input
             className='search-location'
@@ -41,11 +42,11 @@ class List extends Component {
             placeholder='Find location'
             value={this.state.query}
             onChange={(event) => this.updateQuery(event.target.value)}
-            tabindex='0'
+            tabIndex={0}
             />
           <button
             className='clear-button'
-            tabindex='0'
+            tabIndex={0}
             onClick={this.handleSubmit}
             onKeyPress={this.handleSubmit}>
             Clear
@@ -54,7 +55,7 @@ class List extends Component {
 
         <ul className='search-list'>
         {showingLocations.map(marker => (
-          <li key={marker.title} tabindex='0'>
+          <li key={marker.title} tabIndex={0}>
             {marker.title}
           </li>
         ))

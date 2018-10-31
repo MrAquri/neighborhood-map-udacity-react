@@ -59,6 +59,11 @@ body {
   margin-left: 15px;
 }
 
+/* h2 Styles */
+.fav-places {
+  font-size: 14pt;
+}
+
 /* Search Field, Form and Filter Button */
 
 .search-form {
