@@ -40,11 +40,13 @@ class Map extends Component {
     window.initMap = this.initMap
   }
 
-
   // Method initializing and rendering the google map
   initMap = () => {
+
     // Create a new blank array for all the listing markers.
     let markers = []
+
+    var infowindow = new window.google.maps.InfoWindow()
 
     let map = new window.google.maps.Map(document.getElementById('map'), {
       center: {lat: 51.759445, lng: 19.457216},
@@ -52,7 +54,7 @@ class Map extends Component {
     })
     this.setState({map:map})
 
-    var infowindow = new window.google.maps.InfoWindow()
+    let out = this
 
       // Looping through all of the locations
       this.state.locations.forEach((loc) => {
@@ -68,51 +70,68 @@ class Map extends Component {
           animation: window.google.maps.Animation.DROP,
         })
 
+        // Pushing markers to the created array
         markers.push(marker)
 
-        let paragraphs, links
-        paragraphs = []
-        links = []
-
-        // Replacing spaces to the '_'
-        let search = marker.title.replace(/\s+/g, '_')
-        let url = 'https://pl.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
-        fetch(url).then(function(response) {
-          if (response.ok) {
-            return response.json()
-          } else {
-              throw new Error ('Response error: ' + response.statusText)
-          }
-        }).then(function(data) {
-            let page = data.query.pages
-            // Page unique number
-            let pageId = Object.keys(data.query.pages)[0]
-            // Getting the content from the page
-            let content = page[pageId].extract
-            // Getting first paragraph of the wikipedia
-            let firstParagraph = content.slice(0, content.indexOf('</p>') + '</p>'.length)
-            // Create page link to the Wikipedia website
-            let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click here for more informations</a>`
-            paragraphs.push(firstParagraph)
-            links.push(pageLink)
-        }).catch(function(error) {
-            throw new Error ('Retriving data failed: ' + error.statusText)
-        })
-
        // Creating an event listener opening infowindow at each marker
-       marker.addListener('click', function() {
-           infowindow.marker = marker;
-           infowindow.setContent('<div>' + marker.title + paragraphs + links +'</div>');
-           infowindow.open(map, marker);
-           // Make sure the marker property is cleared if the infowindow is closed.
-           infowindow.addListener('closeclick',function(){
-             infowindow.setMarker = null;
-            });
+        marker.addListener('click', function() {
+          // Checking if there is a infowindow and close it before making new one
+          if (infowindow) {
+            infowindow.close()
+            // Fetching data from Wikipedia to the infowindow
+            out.fetchWiki(marker, infowindow, map)
+          }
         })
+      })
+      // Passing markers to state
+      this.setState({markers:markers})
+  }
 
-        })
-                this.setState({markers:markers})
+  // Wikipedia fetching method
+  fetchWiki = (marker, infowindow, map) => {
+    var out = this
+    let paragraphs, links
+    paragraphs = []
+    links = []
+    // Replacing spaces to the '_'
+    let search = marker.title.replace(/\s+/g, '_')
+    let url = 'https://pl.wikipedia.org/w/api.php?action=query&origin=*&prop=extracts&exintro&titles=' + search + '&format=json&utf8'
+    fetch(url).then(function(response) {
+      if (response.ok) {
+        return response.json()
+      } else {
+          throw new Error ('Response error: ' + response.statusText)
       }
+    }).then(function(data) {
+        let page = data.query.pages
+        // Page unique number
+        let pageId = Object.keys(data.query.pages)[0]
+        // Getting the content from the page
+        let content = page[pageId].extract
+        // Getting first paragraph of the wikipedia
+        let firstParagraph = content.slice(0, content.indexOf('</p>') + '</p>'.length)
+        // Create page link to the Wikipedia website
+        let pageLink = `<a href="https://pl.wikipedia.org/wiki/${search}">Click here for more informations</a>`
+        // Pushing data to the arrays
+        paragraphs.push(firstParagraph)
+        links.push(pageLink)
+        // Invoking infowindow method
+        out.infoWindowData(marker, infowindow, map, paragraphs, links)
+    }).catch(function(error) {
+        throw new Error ('Retriving data failed: ' + error.statusText)
+    })
+  }
+
+  // Creating a method providing data for the infowindow
+  infoWindowData = (marker, infowindow, map, paragraphs, links) => {
+    infowindow.marker = marker;
+    infowindow.setContent('<div>' + marker.title + paragraphs + links +'</div>');
+    infowindow.open(map, marker);
+    // Making sure the marker property is cleared if the infowindow is closed
+    infowindow.addListener('closeclick', function() {
+      infowindow.setMarker = null;
+     });
+  }
 
   render() {
     return (

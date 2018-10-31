@@ -20,8 +20,6 @@ class List extends Component {
     this.setState({query: ''})
   }
 
-
-
   render() {
     // Implementing filtering options
     let showingLocations
@@ -55,7 +53,11 @@ class List extends Component {
 
         <ul className='search-list'>
         {showingLocations.map(marker => (
-          <li key={marker.title} tabIndex={0}>
+          <li
+            key={marker.title}
+            tabIndex={0}
+            onClick={this.props.infoWindowData}
+            >
             {marker.title}
           </li>
         ))
