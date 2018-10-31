@@ -27,7 +27,10 @@ class Map extends Component {
     },
   ],
     map: {},
-    markers: []
+    markers: [],
+    infowindow: [],
+    paragraphs: [],
+    links: []
   }
 
   // Render map after the page is loaded
@@ -85,6 +88,8 @@ class Map extends Component {
       })
       // Passing markers to state
       this.setState({markers:markers})
+
+      this.setState({infowindow:infowindow})
   }
 
   // Wikipedia fetching method
@@ -120,6 +125,8 @@ class Map extends Component {
     }).catch(function(error) {
         throw new Error ('Retriving data failed: ' + error.statusText)
     })
+    this.setState({paragraphs:paragraphs})
+    this.setState({links:links})
   }
 
   // Creating a method providing data for the infowindow
@@ -140,6 +147,10 @@ class Map extends Component {
         <List
           markers={this.state.markers}
           map={this.state.map}
+          infowindow={this.state.infowindow}
+          paragraphs={this.state.paragraphs}
+          links={this.state.links}
+          infoWindowData={this.infoWindowData}
         />
       </div>
     )

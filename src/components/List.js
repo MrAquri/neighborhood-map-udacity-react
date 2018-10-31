@@ -21,6 +21,10 @@ class List extends Component {
   }
 
   render() {
+
+    //Importing data from Map.js
+    const {map, infowindow, paragraphs, links, infoWindowData} = this.props
+
     // Implementing filtering options
     let showingLocations
     if (this.state.query) {
@@ -56,7 +60,7 @@ class List extends Component {
           <li
             key={marker.title}
             tabIndex={0}
-            onClick={this.props.infoWindowData}
+            onClick={() => infoWindowData(marker, infowindow, map, paragraphs, links)}
             >
             {marker.title}
           </li>
