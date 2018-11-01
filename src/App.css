@@ -119,3 +119,12 @@ body {
     left: 12px;
   }
 }
+
+@media screen and (min-width: 344px) {
+  .header {
+    height: 30px;
+  }
+  #map {
+    bottom: 20px;
+  }
+}
