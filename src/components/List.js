@@ -23,7 +23,7 @@ class List extends Component {
   render() {
 
     //Importing data from Map.js
-    const {map, infowindow, paragraphs, links, infoWindowData} = this.props
+    const {map, infowindow, fetchWiki} = this.props
 
     // Implementing filtering options
     let showingLocations
@@ -60,7 +60,8 @@ class List extends Component {
           <li
             key={marker.title}
             tabIndex={0}
-            onClick={() => infoWindowData(marker, infowindow, map, paragraphs, links)}
+            onClick={() => fetchWiki(marker, infowindow, map)}
+            onKeyPress={(e) => {if (e.key === 'Enter') fetchWiki(marker, infowindow, map)}}
             >
             {marker.title}
           </li>

@@ -148,9 +148,7 @@ class Map extends Component {
           markers={this.state.markers}
           map={this.state.map}
           infowindow={this.state.infowindow}
-          paragraphs={this.state.paragraphs}
-          links={this.state.links}
-          infoWindowData={this.infoWindowData}
+          fetchWiki={this.fetchWiki}
         />
       </div>
     )
