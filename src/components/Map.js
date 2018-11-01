@@ -143,7 +143,7 @@ class Map extends Component {
   render() {
     return (
       <div>
-        <div id='map'> </div>
+        <div id='map' aria-label='Favourite Locations Map by Google'> </div>
         <List
           markers={this.state.markers}
           map={this.state.map}

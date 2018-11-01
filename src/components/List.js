@@ -45,6 +45,7 @@ class List extends Component {
             value={this.state.query}
             onChange={(event) => this.updateQuery(event.target.value)}
             tabIndex={0}
+            aria-label='Search location'
             />
           <button
             className='clear-button'

@@ -6,9 +6,9 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-          <div className='header'>Neighborhood Map</div>
-          <div className='container'>
+      <div className="App" role='application'>
+          <div className='header' role='banner'>Neighborhood Map</div>
+          <div className='container' role='main'>
             <Map />
           </div>
       </div>
