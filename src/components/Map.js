@@ -132,6 +132,13 @@ class Map extends Component {
 
   // Creating a method providing data for the infowindow
   infoWindowData = (marker, infowindow, map, paragraphs, links) => {
+
+    // Adding animated marker after click, which stops shortly after
+    marker.setAnimation(window.google.maps.Animation.BOUNCE)
+      setTimeout(function () {
+        marker.setAnimation(null)
+      }, 750)
+
     infowindow.marker = marker;
     infowindow.setContent('<div>' + marker.title + paragraphs + links +
       `<p><i> Informations provided by Wikipedia </i></p>`+
