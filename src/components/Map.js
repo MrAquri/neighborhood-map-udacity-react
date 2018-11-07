@@ -124,7 +124,7 @@ class Map extends Component {
         // Invoking infowindow method
         out.infoWindowData(marker, infowindow, map, paragraphs, links)
     }).catch(function(error) {
-        throw new Error ('Retriving data failed: ' + error.statusText)
+        alert('Retriving data failed: ' + error.statusText)
     })
     this.setState({paragraphs:paragraphs})
     this.setState({links:links})
@@ -165,8 +165,8 @@ class Map extends Component {
     script.src = url
     script.async = true
     script.defer = true
-    script.onError = function() {
-      document.write = 'Google Maps not found'
+    script.onerror = function() {
+      alert('Google Maps not found')
     }
     index.parentNode.insertBefore(script, index)
   }
