@@ -87,9 +87,10 @@ class Map extends Component {
         })
       })
       // Passing markers to state
-      this.setState({markers:markers})
-
-      this.setState({infowindow:infowindow})
+      this.setState({
+          markers,
+          infowindow
+      })
   }
 
   // Wikipedia fetching method
