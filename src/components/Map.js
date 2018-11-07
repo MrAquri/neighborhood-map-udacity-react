@@ -134,7 +134,7 @@ class Map extends Component {
   infoWindowData = (marker, infowindow, map, paragraphs, links) => {
     infowindow.marker = marker;
     infowindow.setContent('<div>' + marker.title + paragraphs + links +
-      '<p>'+ '<i>' + 'Informations provided by Wikipedia' + '</i>' + '</p>'+
+      `<p><i> Informations provided by Wikipedia </i></p>`+
         '</div>');
     infowindow.open(map, marker);
     // Making sure the marker property is cleared if the infowindow is closed
