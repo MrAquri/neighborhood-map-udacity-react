@@ -63,6 +63,8 @@ class List extends Component {
             tabIndex={0}
             onClick={() => fetchWiki(marker, infowindow, map)}
             onKeyPress={(e) => {if (e.key === 'Enter') fetchWiki(marker, infowindow, map)}}
+            role= 'button'
+            aria-label='Location'
             >
             {marker.title}
           </li>
