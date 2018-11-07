@@ -133,7 +133,9 @@ class Map extends Component {
   // Creating a method providing data for the infowindow
   infoWindowData = (marker, infowindow, map, paragraphs, links) => {
     infowindow.marker = marker;
-    infowindow.setContent('<div>' + marker.title + paragraphs + links +'</div>');
+    infowindow.setContent('<div>' + marker.title + paragraphs + links +
+      '<p>'+ '<i>' + 'Informations provided by Wikipedia' + '</i>' + '</p>'+
+        '</div>');
     infowindow.open(map, marker);
     // Making sure the marker property is cleared if the infowindow is closed
     infowindow.addListener('closeclick', function() {
