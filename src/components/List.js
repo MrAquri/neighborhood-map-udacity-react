@@ -6,11 +6,11 @@ class List extends Component {
   state = {
     query: ''
   }
-
+/*
   updateQuery = (query) => {
     this.setState({query: query.trim()})
   }
-
+*/
   handleSubmit = (e) => {
     e.preventDefault()
     this.clearQuery()
@@ -18,6 +18,16 @@ class List extends Component {
 
   clearQuery = () => {
     this.setState({query: ''})
+  }
+
+  //      showingLocations.map((fmarker) => this.props.markers.title === fmarker.title && fmarker.setVisile(false))
+  //      showingMarkers = this.props.locations.filter((loc) => match.test(loc.title))
+
+  implementFilter = (query) => {
+    this.props.markers.forEach(marker => {
+      console.log(marker)
+    })
+    this.setState({query: query.trim()})
   }
 
   render() {
@@ -43,7 +53,7 @@ class List extends Component {
             type='text'
             placeholder='Find location'
             value={this.state.query}
-            onChange={(event) => this.updateQuery(event.target.value)}
+            onChange={(event) => {this.implementFilter(event.target.value)}}
             tabIndex={0}
             aria-label='Search location'
             />
