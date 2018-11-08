@@ -17,7 +17,13 @@ class List extends Component {
   }
 
   clearQuery = () => {
+
     this.setState({query: ''})
+    
+    // Looping through markers array and make all markers back visible
+    this.props.markers.forEach(marker => {
+      marker.setVisible(true)
+    })
   }
 
   // Looping through markers array and returning visible markers if the marker matches query
