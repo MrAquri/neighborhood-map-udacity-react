@@ -20,12 +20,12 @@ class List extends Component {
     this.setState({query: ''})
   }
 
-  //      showingLocations.map((fmarker) => this.props.markers.title === fmarker.title && fmarker.setVisile(false))
-  //      showingMarkers = this.props.locations.filter((loc) => match.test(loc.title))
-
+  // Looping through markers array and returning visible markers if the marker matches query
   implementFilter = (query) => {
     this.props.markers.forEach(marker => {
-      console.log(marker)
+      marker.title.toLowerCase().includes(query.toLowerCase()) === true
+      ? marker.setVisible(true)
+      : marker.setVisible(false)
     })
     this.setState({query: query.trim()})
   }
